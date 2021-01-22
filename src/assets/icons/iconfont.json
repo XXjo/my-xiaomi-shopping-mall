@@ -1,0 +1,44 @@
+{
+  "id": "2343665",
+  "name": "no name",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "13486391",
+      "name": "礼物",
+      "font_class": "present",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "90513",
+      "name": "15天无理由退货",
+      "font_class": "fifteen-days",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "446561",
+      "name": "7天退换",
+      "font_class": "seven-days",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "9519641",
+      "name": "Tool",
+      "font_class": "tool",
+      "unicode": "e83a",
+      "unicode_decimal": 59450
+    },
+    {
+      "icon_id": "10148096",
+      "name": "位置",
+      "font_class": "position",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

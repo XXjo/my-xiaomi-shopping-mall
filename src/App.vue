@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-21 18:13:08
+ * @LastEditTime: 2021-01-22 17:58:17
 -->
 <template>
   <div id="app">
@@ -55,7 +55,7 @@
       <!-- 顶部导航栏End -->
 
       <!-- 顶部容器Start -->
-      <el-header height="100px" id="head">
+      <el-header height="100px" id="header">
         <div class="head-logo">
           <router-link to="/">
             <img src="./assets/mi-logo.png" />
@@ -83,14 +83,26 @@
       <!-- 主要区域容器End -->
       
       <!-- 底栏容器Start -->
-      <el-foot>
-        <div id="footer-service">
-
+      <el-footer id="footer" >
+        <div class="footer-service">
+          <el-button type="text" class="icon-tool">预约维修服务</el-button>
+          <span>|</span>
+          <el-button type="text" class="icon-seven-days">7天无理由退货</el-button>
+          <span>|</span>
+          <el-button type="text" class="icon-fifteen-days">15天免费换货</el-button>
+          <span>|</span>
+          <el-button type="text" class="icon-present">满99元包邮</el-button>
+          <span>|</span>
+          <el-button type="text" class="icon-position">520余家售后网点</el-button>
         </div>
-        <div id="footer-links">
-
+        <div class="footer-links">
+          <div>
+            <p>帮助中心</p>
+            <a href="javascript:;">账户管理</a>
+            
+          </div>
         </div>
-      </el-foot>
+      </el-footer>
       <!-- 底栏容器End -->
     </el-container>
     <!-- <div id="nav">
@@ -184,14 +196,14 @@
 /* 顶部导航栏 */
 
 /* 顶部容器 */
-#head {
+#header {
   width: 1260px;
   margin: 0 auto;
   background-color: cadetblue;
   display: flex;
   align-items: center; /*内容垂直居中*/
 }
-#head .head-logo {
+#header .head-logo {
   height: 50px;
   width: 50px;
   vertical-align: middle;
@@ -199,23 +211,48 @@
   text-align: center;
   background-color: #ff6700;
 }
-#head .head-logo img {
+#header .head-logo img {
   height: 80%;
   width: 80%;
 }
-#head .head-nav {
+#header .head-nav {
   margin-left: 150px;
 }
-#head .el-button--text {
+#header .el-button--text {
   color: #333;
   font-size: 16px;
 }
-#head .head-search {
+#header .head-search {
   margin-left: 300px;
   width: 400px;
 }
 /* 顶部容器 */
 /* 底部容器 */
+#footer {
+  background-color: cadetblue;
+}
+#footer .footer-service {
+  width: 1260px;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  background-color: crimson;
+}
+#footer .footer-service .el-button--text,
+#footer .footer-service span{
+  margin: 0 auto;
+  color: #616161;
+}
+#footer .footer-links {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+#footer .footer-links a{
+  
+}
+
 /* 底部容器 */
 
 </style>
