@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-22 17:58:17
+ * @LastEditTime: 2021-01-25 14:38:48
 -->
 <template>
   <div id="app">
@@ -83,7 +83,7 @@
       <!-- 主要区域容器End -->
       
       <!-- 底栏容器Start -->
-      <el-footer id="footer" >
+      <el-footer id="footer">
         <div class="footer-service">
           <el-button type="text" class="icon-tool">预约维修服务</el-button>
           <span>|</span>
@@ -96,10 +96,58 @@
           <el-button type="text" class="icon-position">520余家售后网点</el-button>
         </div>
         <div class="footer-links">
-          <div>
-            <p>帮助中心</p>
+          <div class="footer-links-item">
+            <p class="item-title">帮助中心</p>
             <a href="javascript:;">账户管理</a>
-            
+            <a href="javascript:;">购物指南</a>
+            <a href="javascript:;">订单操作</a>
+          </div>
+          <div class="footer-links-item">
+            <p class="item-title">服务支持</p>
+            <a href="javascript:;">售后政策</a>
+            <a href="javascript:;">自助服务</a>
+            <a href="javascript:;">相关下载</a>
+          </div>
+          <div class="footer-links-item">
+            <p class="item-title">线下门店</p>
+            <a href="javascript:;">小米之家</a>
+            <a href="javascript:;">服务网点</a>
+            <a href="javascript:;">授权体验店</a>
+          </div>
+          <div class="footer-links-item">
+            <p class="item-title">关于小米</p>
+            <a href="javascript:;">了解小米</a>
+            <a href="javascript:;">加入小米</a>
+            <a href="javascript:;">投资者关系</a>
+            <a href="javascript:;">企业社会责任</a>
+            <a href="javascript:;">廉洁举报</a>
+          </div>
+          <div class="footer-links-item">
+            <p class="item-title">关注我们</p>
+            <a href="javascript:;">新浪微博</a>
+            <a href="javascript:;">官方微信</a>
+            <a href="javascript:;">联系我们</a>
+            <a href="javascript:;">公益基金会</a>
+            <a href="javascript:;">廉洁举报</a>
+          </div>
+          <div class="footer-links-item">
+            <p class="item-title">特色服务</p>
+            <a href="javascript:;">了解小米</a>
+            <a href="javascript:;">加入小米</a>
+            <a href="javascript:;">投资者关系</a>
+            <a href="javascript:;">企业社会责任</a>
+          </div>
+          <div class="footer-links-item">
+            <p class="item-title">特色服务</p>
+            <a href="javascript:;">F码通道</a>
+            <a href="javascript:;">礼物码</a>
+            <a href="javascript:;">防伪查询</a>
+          </div>
+          <div class="footer-links-item">
+            <div>
+              <p style="color: #ff6700; font-size: 20px;">400-100-5678</p>
+              <p style="color: #757575;">8:00-18:00（仅收市话费）</p>
+            </div>
           </div>
         </div>
       </el-footer>
@@ -114,16 +162,15 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        num: 0,
-        search: ""
-      }
-    }
-  };
+export default {
+  data() {
+    return {
+      num: 0,
+      search: ""
+    };
+  }
+};
 </script>
-
 
 <style>
 * {
@@ -199,7 +246,7 @@
 #header {
   width: 1260px;
   margin: 0 auto;
-  background-color: cadetblue;
+  /* background-color: cadetblue; */
   display: flex;
   align-items: center; /*内容垂直居中*/
 }
@@ -228,31 +275,44 @@
 }
 /* 顶部容器 */
 /* 底部容器 */
-#footer {
-  background-color: cadetblue;
-}
 #footer .footer-service {
   width: 1260px;
   display: flex;
   align-items: center;
   margin: 0 auto;
-  background-color: crimson;
 }
 #footer .footer-service .el-button--text,
-#footer .footer-service span{
+#footer .footer-service span {
   margin: 0 auto;
   color: #616161;
 }
 #footer .footer-links {
-  width: 100%;
   display: flex;
+  margin: 20px auto;
+  border-top: solid 1px #e0e0e0;
+}
+#footer .footer-links .footer-links-item {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   margin: 0 auto;
+  padding-top: 40px;
 }
-#footer .footer-links a{
-  
+#footer .footer-links .footer-links-item .item-title {
+  margin-bottom: 40px;
 }
-
+#footer .footer-links a {
+  margin-bottom: 10px;
+}
+#footer .footer-links a:link {
+  text-decoration: none;
+  color: #757575;
+}
+#footer .footer-links .footer-links-item div {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 /* 底部容器 */
 
 </style>
