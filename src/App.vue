@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-25 14:38:48
+ * @LastEditTime: 2021-01-26 17:05:07
 -->
 <template>
   <div id="app">
@@ -42,15 +42,27 @@
           <i class="el-icon-shopping-cart-full">  购物车 ({{ num }}) </i>
         </div>
 
-        <div class="topbar-user-info">
+        <div v-if="false" class="topbar-user-not-login">
           <el-button type="text">登录</el-button>
           <span>|</span>
           <el-button type="text">注册</el-button>
           <span>|</span>
           <el-button type="text">消息通知</el-button>
         </div>
-
-
+        <div v-else class="topbar-user-login">
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              XuXiaoling<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <span>|</span>
+          <el-button type="text">消息通知</el-button>
+          <span>|</span>
+          <el-button type="text">我的订单</el-button>
+        </div>
       </el-header>
       <!-- 顶部导航栏End -->
 
@@ -172,7 +184,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   margin: 0;
 }
@@ -236,9 +248,31 @@ export default {
 #topbar .topbar-mini-car-menu-full:hover i {
   color: #ff6700;
 }
-#topbar .topbar-user-info {
+#topbar .topbar-user-not-login {
   float: right;
   margin-right: 50px;
+}
+#topbar .topbar-user-login {
+  height: 40px;
+  width: 300px;
+  float: right;
+  display: flex;
+  justify-content: center; /*内容水平居中*/
+  align-items: center; /*内容垂直居中*/
+  margin-right: 50px;
+}
+#topbar .topbar-user-login div {
+  height: 40px;
+  width: 90px;
+  color: #b0b0b0;
+  font-size: 12px;
+  display: flex;
+  justify-content: center; /*内容水平居中*/
+  align-items: center; /*内容垂直居中*/
+}
+.el-dropdown-menu__item:not(.is-disabled):hover {
+  background-color: #e0e0e0 !important; /*!important用于提高优先级*/
+  color: #ff6700 !important;
 }
 /* 顶部导航栏 */
 
@@ -314,5 +348,4 @@ export default {
   transform: translateY(-50%);
 }
 /* 底部容器 */
-
 </style>
