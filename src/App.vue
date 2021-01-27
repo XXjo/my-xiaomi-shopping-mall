@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-26 17:05:07
+ * @LastEditTime: 2021-01-27 17:43:21
 -->
 <template>
   <div id="app">
@@ -42,7 +42,7 @@
           <i class="el-icon-shopping-cart-full">  购物车 ({{ num }}) </i>
         </div>
 
-        <div v-if="false" class="topbar-user-not-login">
+        <div v-if="!this.$store.getters.getShowLoginFlag" class="topbar-user-not-login">
           <el-button type="text">登录</el-button>
           <span>|</span>
           <el-button type="text">注册</el-button>
@@ -55,6 +55,7 @@
               XuXiaoling<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>我的喜欢</el-dropdown-item>
               <el-dropdown-item>退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -174,13 +175,23 @@
 </template>
 
 <script>
+// import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
       num: 0,
       search: ""
     };
-  }
+  },
+  created() {
+    
+  },
+  methods: {
+
+  },
+
+
 };
 </script>
 

@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-26 13:38:29
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-26 17:55:04
+ * @LastEditTime: 2021-01-27 14:19:03
  */
 export default {
     state: {
@@ -24,16 +24,21 @@ export default {
     },
 
     mutations: {
-        setUserName(state, name){
+        USER_NAME(state, name){
             state.user_name = name
         },
 
-        setShowLoginFlag(state, flag){
+        SHOW_LOGIN_FLAG(state, flag){
             state.show_login_flag = flag
         }
     },
 
     actions: {
-
+        setUserName( {commit}, name){
+            commit("USER_NAME", name)
+        },
+        setShowLoginFlag( {commit}, flag){
+            commit("SHOW_LOGIN_FLAG", flag)
+        }
     }
 }
