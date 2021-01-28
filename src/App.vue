@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-27 17:43:21
+ * @LastEditTime: 2021-01-28 15:37:34
 -->
 <template>
   <div id="app">
@@ -42,21 +42,21 @@
           <i class="el-icon-shopping-cart-full">  购物车 ({{ num }}) </i>
         </div>
 
-        <div v-if="!this.$store.getters.getShowLoginFlag" class="topbar-user-not-login">
-          <el-button type="text">登录</el-button>
+        <div v-if="!this.$store.getters.user" class="topbar-user-not-login">
+          <el-button type="text" @click="login">登录</el-button>
           <span>|</span>
           <el-button type="text">注册</el-button>
           <span>|</span>
           <el-button type="text">消息通知</el-button>
         </div>
         <div v-else class="topbar-user-login">
-          <el-dropdown>
+          <el-dropdown @command="aboutUserCommand">
             <span class="el-dropdown-link">
-              XuXiaoling<i class="el-icon-arrow-down el-icon--right"></i>
+              {{this.$store.getters.getUserName}}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>我的喜欢</el-dropdown-item>
-              <el-dropdown-item>退出登录</el-dropdown-item>
+              <el-dropdown-item command="myFavour">我的喜欢</el-dropdown-item>
+              <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <span>|</span>
@@ -88,7 +88,7 @@
         </div>
       </el-header>
       <!-- 顶部容器End -->
-
+      <Login></Login>
       <!-- 主要区域容器Start -->
       <el-main>
         <router-view></router-view>
@@ -176,8 +176,14 @@
 
 <script>
 // import { mapGetters } from "vuex";
+import { mapActions} from "vuex";
+import Login from '@/components/Login';
 
 export default {
+  components:{
+    Login
+  },
+
   data() {
     return {
       num: 0,
@@ -188,7 +194,19 @@ export default {
     
   },
   methods: {
+    ...mapActions(["setUser", "setShowLoginFlag"]),
 
+    login(){
+      this.setShowLoginFlag(true);
+    },
+    aboutUserCommand(command){
+      if(command == "myFavour"){
+        return
+      }
+      else if (command == "loginOut") {
+        return
+      }
+    }
   },
 
 

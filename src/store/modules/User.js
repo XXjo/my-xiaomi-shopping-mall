@@ -4,16 +4,16 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-26 13:38:29
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-27 14:19:03
+ * @LastEditTime: 2021-01-28 14:05:14
  */
 export default {
     state: {
-        user_name: "",
-        show_login_flag: false
+        user: null,
+        show_login_flag: false   //控制登录组件的显示
     },
 
     getters: {
-        getUserName(state){
+        getUser(state){
             return state.user_name
         },
 
@@ -24,8 +24,8 @@ export default {
     },
 
     mutations: {
-        USER_NAME(state, name){
-            state.user_name = name
+        USER(state, user){
+            state.user = user
         },
 
         SHOW_LOGIN_FLAG(state, flag){
@@ -34,8 +34,8 @@ export default {
     },
 
     actions: {
-        setUserName( {commit}, name){
-            commit("USER_NAME", name)
+        setUser( {commit}, user){
+            commit("USER", user)
         },
         setShowLoginFlag( {commit}, flag){
             commit("SHOW_LOGIN_FLAG", flag)
