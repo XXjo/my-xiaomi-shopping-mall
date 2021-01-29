@@ -4,12 +4,12 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-28 13:14:37
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-28 17:52:26
+ * @LastEditTime: 2021-01-29 15:50:14
 -->
 <template>
     <div>
-        <el-dialog title="登录" center :visible="is_show" width="20%">
-            <el-form :model="user_info" :rules="rules" ref="loginForm">
+        <el-dialog title="登录" center :visible.sync="is_show" width="20%">
+            <el-form :model="user_info" :rules="rules" ref="login_form">
             <!-- el-form-item中的prop，与el-input中v-model的user_info.* 名字需要相同，否则满足规则提醒的文字也不会消失 -->
             <el-form-item prop="name">
                 <el-input v-model="user_info.name" placeholder="请输入用户名"></el-input>
@@ -56,16 +56,30 @@ export default {
             get() {
                 return this.$store.getters.getShowLoginFlag;
             },
-            // set(val) {
-            //     return
-            // }
+            set(val) {
+                this.$refs.login_form.resetFields();
+                this.setShowLoginFlag(val);
+            }
         }
     },
 
     methods: {
         login() {
-            console.log(this.user_info)
-            console.log(this.$refs.loginForm)
+            this.$refs.login_form.validate((valid) => {
+                if(valid){
+                    this.$axios
+                    .post("/api/users/login", {
+                        userName: this.user_info.name,
+                        password: this.user_info.password
+                    })
+                    .then(res => {
+                        console.log(res)
+                    })
+                    .catch(err =>{
+                        console.log(err);
+                    })
+                }
+            })
         }
     }
 }

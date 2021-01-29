@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-28 15:37:34
+ * @LastEditTime: 2021-01-29 14:31:33
 -->
 <template>
   <div id="app">
@@ -45,7 +45,7 @@
         <div v-if="!this.$store.getters.user" class="topbar-user-not-login">
           <el-button type="text" @click="login">登录</el-button>
           <span>|</span>
-          <el-button type="text">注册</el-button>
+          <el-button type="text" @click="register">注册</el-button>
           <span>|</span>
           <el-button type="text">消息通知</el-button>
         </div>
@@ -88,7 +88,9 @@
         </div>
       </el-header>
       <!-- 顶部容器End -->
+      <!-- 登录组件 -->
       <Login></Login>
+      <Register :show="register_show" @success="modifyRegister"></Register>
       <!-- 主要区域容器Start -->
       <el-main>
         <router-view></router-view>
@@ -178,16 +180,19 @@
 // import { mapGetters } from "vuex";
 import { mapActions} from "vuex";
 import Login from '@/components/Login';
+import Register from '@/components/Register';
 
 export default {
   components:{
-    Login
+    Login,
+    Register
   },
 
   data() {
     return {
       num: 0,
-      search: ""
+      search: "",
+      register_show: false
     };
   },
   created() {
@@ -198,6 +203,13 @@ export default {
 
     login(){
       this.setShowLoginFlag(true);
+    },
+    register(){
+      this.register_show = true;
+    },
+    //接收子组件传递过来的数据，并更新到给子组件传递的参数中
+    modifyRegister(val){
+      this.register_show = val;
     },
     aboutUserCommand(command){
       if(command == "myFavour"){
