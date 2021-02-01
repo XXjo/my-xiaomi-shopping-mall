@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-29 14:08:25
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-29 18:08:54
+ * @LastEditTime: 2021-02-01 14:19:03
 -->
 <template>
     <div>
@@ -33,6 +33,11 @@ export default {
         show: Boolean
     },
     data() {
+        var validateName = (rule, value, callback) => {
+            if(value === ""){
+                return(new Error("用户名不能为空"));
+            }
+        };
         return{
             isShow: false,
             register_info:{
@@ -60,8 +65,11 @@ export default {
         },
         //将子组件的值传递给父组件
         isShow(val) {
-            this.$refs["register_form"].resetFields();
-            this.$emit("success", val);
+            if(!val){
+                this.$refs["register_form"].resetFields(); //如果表单未进行输入就执行resetFields，会导致"TypeError: Cannot read property 'resetFields' of undefined"
+                this.$emit("success", val); //子组件通过$emit触发父组件的自定义事件success，从而达到将子组件的值传回父组件的目的
+            }
+
         }
 
     },
@@ -75,7 +83,13 @@ export default {
                         password: this.register_info.password
                     })
                     .then(res => {
+                        this.isShow = false;
                         console.log("register", res.data)
+                        var a = ['A', 'B', 'C'];
+                        a.name = 'Hello';
+                        for (var x in a) {
+                            console.log(x); // '0', '1', '2', 'name'
+                        }
                     })
                     .catch(error => {
                         console.log("error")
