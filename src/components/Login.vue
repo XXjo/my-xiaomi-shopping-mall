@@ -4,11 +4,11 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-28 13:14:37
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-29 15:50:14
+ * @LastEditTime: 2021-02-05 17:18:38
 -->
 <template>
     <div>
-        <el-dialog title="登录" center :visible.sync="is_show" width="20%">
+        <el-dialog title="登录" center :visible.sync="is_show" :close-on-click-modal="false" width="20%">
             <el-form :model="user_info" :rules="rules" ref="login_form">
             <!-- el-form-item中的prop，与el-input中v-model的user_info.* 名字需要相同，否则满足规则提醒的文字也不会消失 -->
             <el-form-item prop="name">
@@ -27,10 +27,36 @@
 </template>
 
 <script>
-// import { mapActions} from "vuex";
+import { mapActions} from "vuex";
 
 export default {
     data(){
+        var validate_name = (rule, value, callback) => {
+            if(value === ""){
+                return callback(new Error("用户名不能为空"))
+            }
+            const name_rule = /[a-zA-Z]\w{4,15}/
+            if(name_rule.test(value)){
+                return callback();
+            }
+            else{
+                return callback(new Error("字母开头,长度5-16之间,允许字母数字下划线"));
+            }
+        }
+
+        var validate_pwd = (rule, value, callback) => {
+            if(value === ""){
+                return callback(new Error("密码不能为空"));
+            }
+            const pass_rule = /[a-zA-Z]\w{5,17}/
+            if(pass_rule.test(value)){
+                return callback();
+            }
+            else{
+                return callback(new Error("字母开头,长度6-18之间,允许字母数字和下划线"));
+            }
+        }
+        
         return{
             user_info:{
                 name: "",
@@ -38,10 +64,10 @@ export default {
             },
             rules:{
                 name:[
-                    {required: true, message:'用户名不为空', trigger: 'blur'}
+                    {validator: validate_name, trigger: 'blur'}
                 ],
                 password:[
-                    {required: true, message:'密码不为空', trigger: 'blur'}
+                    {validator: validate_pwd, trigger: 'blur'}
                 ]
             }
         }
@@ -64,6 +90,7 @@ export default {
     },
 
     methods: {
+        ...mapActions(["setUser", "setShowLoginFlag"]),
         login() {
             this.$refs.login_form.validate((valid) => {
                 if(valid){
@@ -73,7 +100,15 @@ export default {
                         password: this.user_info.password
                     })
                     .then(res => {
-                        console.log(res)
+                        if(res.data.code == "001"){
+                            //隐藏登录组件
+                            this.is_show = false;
+                            this.setUser(res.data.user);
+                        }
+                        else{
+                            this.$refs.login_form.resetFields();
+
+                        }
                     })
                     .catch(err =>{
                         console.log(err);

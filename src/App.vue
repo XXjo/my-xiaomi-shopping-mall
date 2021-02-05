@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-29 14:31:33
+ * @LastEditTime: 2021-02-05 15:09:00
 -->
 <template>
   <div id="app">
@@ -201,6 +201,7 @@ export default {
   methods: {
     ...mapActions(["setUser", "setShowLoginFlag"]),
 
+    //更改store中show_login_flag的值
     login(){
       this.setShowLoginFlag(true);
     },

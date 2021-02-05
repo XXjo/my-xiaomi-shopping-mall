@@ -4,12 +4,12 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-29 14:08:25
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-02-01 14:19:03
+ * @LastEditTime: 2021-02-05 14:57:19
 -->
 <template>
     <div>
-        <el-dialog title="注册" center width="20%" :visible.sync="isShow" :rules="rules">
-            <el-form :model="register_info" ref="register_form">
+        <el-dialog title="注册" center width="20%" :visible.sync="isShow" :close-on-click-modal="false">
+            <el-form :model="register_info" ref="register_form" :rules="rules">
               <el-form-item prop="name">
                   <el-input v-model="register_info.name" placeholder="请输入用户名"></el-input>
               </el-form-item>
@@ -33,11 +33,66 @@ export default {
         show: Boolean
     },
     data() {
-        var validateName = (rule, value, callback) => {
+        //校验用户名规则
+        var validate_name = (rule, value, callback) => {
             if(value === ""){
-                return(new Error("用户名不能为空"));
+                return(callback(new Error("用户名不能为空")));
+            }
+            const name_rule = /[a-zA-Z]\w{4,15}/
+            if(name_rule.test(value)){
+                //判断用户名是否已经存在
+                this.$axios
+                .post("/api/users/findUserName", {
+                    userName: this.register_info.name
+                })
+                .then(res =>{
+                    if(res.data.code === "001"){
+                        return callback();
+                    }
+                    else{
+                        return callback(new Error(res.data.msg));
+                    }
+                })
+                .catch(error =>{
+
+                })
+            }
+            else{
+                return(callback(new Error("字母开头,长度5-16之间,允许字母数字下划线")));
             }
         };
+        //校验密码规则
+        var validate_pwd = (rule, value, callback) => {
+            if(value === ""){
+                return callback(new Error("密码不能为空"));
+            }
+            const pass_rule = /[a-zA-Z]\w{5,17}/
+            if(pass_rule.test(value)){
+                return callback();
+            }
+            else{
+                return callback(new Error("字母开头,长度6-18之间,允许字母数字和下划线"));
+            }
+        }
+        //校验再次密码规则
+        var validate_confirm_pwd = (rule, value, callback) => {
+            if(value === ""){
+                return callback(new Error("密码不能为空"));
+            }
+            const pass_rule = /[a-zA-Z]\w{5,17}/
+            if(pass_rule.test(value)){
+                if(value === this.register_info.password){
+                    return callback()
+                }
+                else{
+                    return callback(new Error("两次输入密码不一致"));
+                }
+            }
+            else{
+                return callback(new Error("字母开头,长度6-18之间,允许字母数字和下划线"));
+            }
+        }
+
         return{
             isShow: false,
             register_info:{
@@ -47,17 +102,18 @@ export default {
             },
             rules:{
                 name:[
-                    {required: true, message:'用户名不为空', trigger: 'blur'}
+                    {validator: validate_name, trigger: 'blur'}
                 ],
                 password: [
-                    {required: true, message:'密码不为空', trigger: 'blur'}
+                    {validator: validate_pwd, trigger: 'blur'}
                 ],
                 confirm_password: [
-                    {required: true, message:'密码不为空', trigger: 'blur'}
+                    {validator: validate_confirm_pwd, trigger: 'blur'}
                 ]
             }
         }
     },
+    //watch是用来监测数据的，其实一下每个函数都包含两个参数（new_value, old_value）
     watch: {
         //将从父组件那儿得到的值赋给isShow
         show(val) {
@@ -69,7 +125,6 @@ export default {
                 this.$refs["register_form"].resetFields(); //如果表单未进行输入就执行resetFields，会导致"TypeError: Cannot read property 'resetFields' of undefined"
                 this.$emit("success", val); //子组件通过$emit触发父组件的自定义事件success，从而达到将子组件的值传回父组件的目的
             }
-
         }
 
     },
@@ -84,12 +139,9 @@ export default {
                     })
                     .then(res => {
                         this.isShow = false;
-                        console.log("register", res.data)
-                        var a = ['A', 'B', 'C'];
-                        a.name = 'Hello';
-                        for (var x in a) {
-                            console.log(x); // '0', '1', '2', 'name'
-                        }
+                        console.log("register", res.data);
+
+                        
                     })
                     .catch(error => {
                         console.log("error")
