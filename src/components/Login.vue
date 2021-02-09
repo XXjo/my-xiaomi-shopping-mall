@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-28 13:14:37
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-02-05 17:18:38
+ * @LastEditTime: 2021-02-08 17:51:21
 -->
 <template>
     <div>
@@ -104,6 +104,7 @@ export default {
                             //隐藏登录组件
                             this.is_show = false;
                             this.setUser(res.data.user);
+                            this.notifySuccess("登录成功");
                         }
                         else{
                             this.$refs.login_form.resetFields();
