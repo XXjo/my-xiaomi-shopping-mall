@@ -4,22 +4,22 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-28 13:14:37
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-02-08 17:51:21
+ * @LastEditTime: 2021-06-08 15:19:53
 -->
 <template>
     <div>
         <el-dialog title="登录" center :visible.sync="is_show" :close-on-click-modal="false" width="20%">
             <el-form :model="user_info" :rules="rules" ref="login_form">
-            <!-- el-form-item中的prop，与el-input中v-model的user_info.* 名字需要相同，否则满足规则提醒的文字也不会消失 -->
-            <el-form-item prop="name">
-                <el-input v-model="user_info.name" placeholder="请输入用户名"></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-                <el-input v-model="user_info.password" placeholder="请输入密码" show-password></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="login">登录</el-button>
-            </el-form-item>
+                <!-- el-form-item中的prop，与el-input中v-model的user_info.* 名字需要相同，否则满足规则提醒的文字也不会消失 -->
+                <el-form-item prop="name">
+                    <el-input v-model="user_info.name" placeholder="请输入用户名"></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                    <el-input v-model="user_info.password" placeholder="请输入密码" show-password></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="login">登录</el-button>
+                </el-form-item>
             </el-form>
         </el-dialog>
     </div>
@@ -33,27 +33,27 @@ export default {
     data(){
         var validate_name = (rule, value, callback) => {
             if(value === ""){
-                return callback(new Error("用户名不能为空"))
+                callback(new Error("用户名不能为空"))
             }
             const name_rule = /[a-zA-Z]\w{4,15}/
             if(name_rule.test(value)){
-                return callback();
+                callback();
             }
             else{
-                return callback(new Error("字母开头,长度5-16之间,允许字母数字下划线"));
+                callback(new Error("字母开头,长度5-16之间,允许字母数字下划线"));
             }
         }
 
         var validate_pwd = (rule, value, callback) => {
             if(value === ""){
-                return callback(new Error("密码不能为空"));
+                callback(new Error("密码不能为空"));
             }
             const pass_rule = /[a-zA-Z]\w{5,17}/
             if(pass_rule.test(value)){
-                return callback();
+                callback();
             }
             else{
-                return callback(new Error("字母开头,长度6-18之间,允许字母数字和下划线"));
+                callback(new Error("字母开头,长度6-18之间,允许字母数字和下划线"));
             }
         }
         

@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-02-05 15:09:00
+ * @LastEditTime: 2021-06-08 16:14:38
 -->
 <template>
   <div id="app">
@@ -42,6 +42,7 @@
           <i class="el-icon-shopping-cart-full">  购物车 ({{ num }}) </i>
         </div>
 
+        <!-- 未登录 -->
         <div v-if="!this.$store.getters.user" class="topbar-user-not-login">
           <el-button type="text" @click="login">登录</el-button>
           <span>|</span>
@@ -49,6 +50,8 @@
           <span>|</span>
           <el-button type="text">消息通知</el-button>
         </div>
+
+        <!-- 登录 -->
         <div v-else class="topbar-user-login">
           <el-dropdown @command="aboutUserCommand">
             <span class="el-dropdown-link">

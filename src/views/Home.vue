@@ -4,12 +4,12 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-01-20 13:13:32
+ * @LastEditTime: 2021-06-08 13:54:07
 -->
 <template>
   <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" /> -->
+    <img alt="Vue logo" src="../assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
