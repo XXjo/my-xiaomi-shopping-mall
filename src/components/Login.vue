@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-28 13:14:37
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-08 15:19:53
+ * @LastEditTime: 2021-06-09 17:14:57
 -->
 <template>
     <div>
@@ -82,53 +82,56 @@ export default {
             get() {
                 return this.$store.getters.getShowLoginFlag;
             },
-            set(val) {
+
+            set() {
                 this.$refs.login_form.resetFields();
-                this.setShowLoginFlag(val);
+                this.setShowLoginFlag(false);
             }
+
         }
     },
 
     methods: {
-        ...mapActions(["setUser", "setShowLoginFlag"]),
+        ...mapActions(["setUserName", "setShowLoginFlag"]),
         login() {
             this.$refs.login_form.validate((valid) => {
-                if(valid){
+                if(valid) {
                     this.$axios
-                    .post("/api/users/login", {
-                        userName: this.user_info.name,
-                        password: this.user_info.password
-                    })
-                    .then(res => {
-                        if(res.data.code == "001"){
-                            //隐藏登录组件
-                            this.is_show = false;
-                            this.setUser(res.data.user);
-                            this.notifySuccess("登录成功");
-                        }
-                        else{
-                            this.$refs.login_form.resetFields();
+                        .post("/api/users/login", {
+                            userName: this.user_info.name,
+                            password: this.user_info.password
+                        })
+                        .then(res => {
+                            if(res.data.code === "001") {
+                                this.setShowLoginFlag(false);
+                                this.setUserName(this.user_info.name);
+                                this.notifySuccess(res.data.msg);
+                            }
+                            else {
+                                this.$refs.login_form.resetFields();
+                                this.notifyError(res.data.msg);
+                            }
+                        })
+                        .catch(error => {
 
-                        }
-                    })
-                    .catch(err =>{
-                        console.log(err);
-                    })
+                        })
                 }
-            })
+                else {
+                    return false;
+                }
+            } )
         }
     }
 }
 </script>
 
 <style scoped>
-.el-button--primary:focus, 
-.el-button--primary:hover,
-.el-button--primary {
-    width: 100%;
-    background-color: #ff6700;
-    color: #fff;
-    border-color: #ff6700;
-}
-
+    .el-button--primary:focus, 
+    .el-button--primary:hover,
+    .el-button--primary {
+        width: 100%;
+        background-color: #ff6700;
+        color: #fff;
+        border-color: #ff6700;
+    }
 </style>
