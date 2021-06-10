@@ -4,9 +4,10 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:46:01
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-09 16:41:43
+ * @LastEditTime: 2021-06-10 13:32:44
  */
 module.exports = {
+    lintOnSave:false, //关闭eslint检查
     publicPath: './',
     devServer: {
         open: true,

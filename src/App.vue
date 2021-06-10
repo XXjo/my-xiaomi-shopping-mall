@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-09 18:02:25
+ * @LastEditTime: 2021-06-10 17:39:58
 -->
 <template>
     <div id="app">
@@ -93,7 +93,9 @@
         <!-- 顶部容器End -->
         <!-- 登录组件 -->
         <Login></Login>
-        <Register></Register>
+        <!-- 注册组件 -->
+        <!-- 监听自定义事件fromRegister -->
+        <Register :show="isShow" @fromRegister="getRegisterValue"></Register>
         <!-- 主要区域容器Start -->
         <el-main>
             <router-view></router-view>
@@ -193,7 +195,8 @@ export default {
     data() {
         return {
             num: 0,
-            search: ""
+            search: "",
+            isShow: false
         };
     },
 
@@ -225,7 +228,12 @@ export default {
         },
 
         register() {
-            
+            this.isShow = true;
+        },
+
+        //value来自于子组件register传过来的值
+        getRegisterValue(value) {
+            this.isShow = value
         }
         
     },
@@ -339,10 +347,15 @@ export default {
     #header .head-logo {
         height: 50px;
         width: 50px;
-        vertical-align: middle;
-        display: table-cell;
-        text-align: center;
+        
+        /* display: flex;
+        justify-content: center;
+        align-items: center; */
         background-color: #ff6700;
+    }
+
+    #header .head-logo router-link {
+
     }
     #header .head-logo img {
         height: 80%;

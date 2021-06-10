@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-29 14:08:25
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-02-05 14:57:19
+ * @LastEditTime: 2021-06-10 15:25:56
 -->
 <template>
     <div>
@@ -47,10 +47,10 @@ export default {
                 })
                 .then(res =>{
                     if(res.data.code === "001"){
-                        return callback();
+                        callback();
                     }
                     else{
-                        return callback(new Error(res.data.msg));
+                        callback(new Error(res.data.msg));
                     }
                 })
                 .catch(error =>{
@@ -58,38 +58,38 @@ export default {
                 })
             }
             else{
-                return(callback(new Error("字母开头,长度5-16之间,允许字母数字下划线")));
+                callback(new Error("字母开头,长度5-16之间,允许字母数字下划线"));
             }
         };
         //校验密码规则
         var validate_pwd = (rule, value, callback) => {
             if(value === ""){
-                return callback(new Error("密码不能为空"));
+                callback(new Error("密码不能为空"));
             }
             const pass_rule = /[a-zA-Z]\w{5,17}/
             if(pass_rule.test(value)){
-                return callback();
+                callback();
             }
             else{
-                return callback(new Error("字母开头,长度6-18之间,允许字母数字和下划线"));
+                callback(new Error("字母开头,长度6-18之间,允许字母数字和下划线"));
             }
         }
         //校验再次密码规则
         var validate_confirm_pwd = (rule, value, callback) => {
             if(value === ""){
-                return callback(new Error("密码不能为空"));
+                callback(new Error("密码不能为空"));
             }
             const pass_rule = /[a-zA-Z]\w{5,17}/
             if(pass_rule.test(value)){
                 if(value === this.register_info.password){
-                    return callback()
+                    callback()
                 }
                 else{
-                    return callback(new Error("两次输入密码不一致"));
+                    callback(new Error("两次输入密码不一致"));
                 }
             }
             else{
-                return callback(new Error("字母开头,长度6-18之间,允许字母数字和下划线"));
+                callback(new Error("字母开头,长度6-18之间,允许字母数字和下划线"));
             }
         }
 
@@ -113,21 +113,21 @@ export default {
             }
         }
     },
-    //watch是用来监测数据的，其实一下每个函数都包含两个参数（new_value, old_value）
+    //watch是用来监测数据的，其实每个函数都包含两个参数（newValue, oldValue）
+    //watch监听的数据来源可以是data、computed、props
     watch: {
-        //将从父组件那儿得到的值赋给isShow
-        show(val) {
-            this.isShow = val;
+        show(newValue) {
+            this.isShow = newValue;
         },
-        //将子组件的值传递给父组件
-        isShow(val) {
-            if(!val){
-                this.$refs["register_form"].resetFields(); //如果表单未进行输入就执行resetFields，会导致"TypeError: Cannot read property 'resetFields' of undefined"
-                this.$emit("success", val); //子组件通过$emit触发父组件的自定义事件success，从而达到将子组件的值传回父组件的目的
+
+        isShow(newValue) {
+            if(!newValue) {
+                this.$refs.register_form.resetFields();
+                this.$emit('fromRegister', newValue); //触发自定义事件fromRegister，从而达到将子组件的值传回父组件的目的
             }
         }
-
     },
+    
     methods: {
         register(){
             this.$refs['register_form'].validate((valid) => {
@@ -139,9 +139,13 @@ export default {
                     })
                     .then(res => {
                         this.isShow = false;
-                        console.log("register", res.data);
-
-                        
+                        if(res.data.code === "001") {
+                            this.isShow = false;
+                            this.notifySuccess(res.data.msg);
+                        }
+                        else {
+                            this.notifuError(res.data.msg);
+                        }
                     })
                     .catch(error => {
                         console.log("error")
