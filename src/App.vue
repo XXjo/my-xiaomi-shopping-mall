@@ -4,174 +4,189 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-10 17:39:58
+ * @LastEditTime: 2021-06-11 17:32:29
 -->
 <template>
     <div id="app">
         <el-container>
-        <!-- 顶部导航栏Start -->
-        <el-header height="40px" id="topbar">
-            <div class="topbar-nav">
-                <el-button type="text">小米商城</el-button>
-                <span>|</span>
-                <el-button type="text">MIUI</el-button>
-                <span>|</span>
-                <el-button type="text">IoT</el-button>
-                <span>|</span>
-                <el-button type="text">云服务</el-button>
-                <span>|</span>
-                <el-button type="text">天星数科</el-button>
-                <span>|</span>
-                <el-button type="text">有品</el-button>
-                <span>|</span>
-                <el-button type="text">小爱开放平台</el-button>
-                <span>|</span>
-                <el-button type="text">企业团购</el-button>
-                <span>|</span>
-                <el-button type="text">资质证照</el-button>
-                <span>|</span>
-                <el-button type="text">协议规则</el-button>
-                <span>|</span>
-                <el-button type="text">下载app</el-button>
-                <span>|</span>
-                <el-button type="text">智能生活</el-button>
-                <span>|</span>
-                <el-button type="text">Select Location</el-button>
-            </div>
-            <div :class="num == 0 ? 'topbar-mini-car-menu' : 'topbar-mini-car-menu-full'">
-                <i class="el-icon-shopping-cart-full">  购物车 ({{ num }}) </i>
-            </div>
-
-            <!-- 未登录 -->
-            <div v-if="!user_name" class="topbar-user-not-login">
-                <el-button type="text" @click="login">登录</el-button>
-                <span>|</span>
-                <el-button type="text" @click="register">注册</el-button>
-                <span>|</span>
-                <el-button type="text">消息通知</el-button>
-            </div>
-
-            <!-- 登录 -->
-            <div v-else class="topbar-user-login">
-                <el-dropdown @command="aboutUserCommand">
-                    <span class="el-dropdown-link">
-                    {{user_name}}<i class="el-icon-arrow-down el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="myFavour">我的喜欢</el-dropdown-item>
-                        <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-                <span>|</span>
-                <el-button type="text">消息通知</el-button>
-                <span>|</span>
-                <el-button type="text">我的订单</el-button>
-            </div>
-        </el-header>
-        <!-- 顶部导航栏End -->
-
-        <!-- 顶部容器Start -->
-        <el-header height="100px" id="header">
-            <div class="head-logo">
-            <router-link to="/">
-                <img src="./assets/mi-logo.png" />
-            </router-link>
-            </div>
-            <div class="head-nav">
-            <el-button type="text">全部商品分类</el-button>
-            <el-button type="text">手机</el-button>
-            <el-button type="text">电视机</el-button>
-            <el-button type="text">空调</el-button>
-            <el-button type="text">洗衣机</el-button>
-            </div>
-            <div class="head-search">
-            <el-input v-model="search" placeholder="请输入搜索内容">
-                <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
-            </div>
-        </el-header>
-        <!-- 顶部容器End -->
-        <!-- 登录组件 -->
-        <Login></Login>
-        <!-- 注册组件 -->
-        <!-- 监听自定义事件fromRegister -->
-        <Register :show="isShow" @fromRegister="getRegisterValue"></Register>
-        <!-- 主要区域容器Start -->
-        <el-main>
-            <router-view></router-view>
-        </el-main>
-        <!-- 主要区域容器End -->
-        
-        <!-- 底栏容器Start -->
-        <el-footer id="footer">
-            <div class="footer-service">
-            <el-button type="text" class="icon-tool">预约维修服务</el-button>
-            <span>|</span>
-            <el-button type="text" class="icon-seven-days">7天无理由退货</el-button>
-            <span>|</span>
-            <el-button type="text" class="icon-fifteen-days">15天免费换货</el-button>
-            <span>|</span>
-            <el-button type="text" class="icon-present">满99元包邮</el-button>
-            <span>|</span>
-            <el-button type="text" class="icon-position">520余家售后网点</el-button>
-            </div>
-            <div class="footer-links">
-            <div class="footer-links-item">
-                <p class="item-title">帮助中心</p>
-                <a href="javascript:;">账户管理</a>
-                <a href="javascript:;">购物指南</a>
-                <a href="javascript:;">订单操作</a>
-            </div>
-            <div class="footer-links-item">
-                <p class="item-title">服务支持</p>
-                <a href="javascript:;">售后政策</a>
-                <a href="javascript:;">自助服务</a>
-                <a href="javascript:;">相关下载</a>
-            </div>
-            <div class="footer-links-item">
-                <p class="item-title">线下门店</p>
-                <a href="javascript:;">小米之家</a>
-                <a href="javascript:;">服务网点</a>
-                <a href="javascript:;">授权体验店</a>
-            </div>
-            <div class="footer-links-item">
-                <p class="item-title">关于小米</p>
-                <a href="javascript:;">了解小米</a>
-                <a href="javascript:;">加入小米</a>
-                <a href="javascript:;">投资者关系</a>
-                <a href="javascript:;">企业社会责任</a>
-                <a href="javascript:;">廉洁举报</a>
-            </div>
-            <div class="footer-links-item">
-                <p class="item-title">关注我们</p>
-                <a href="javascript:;">新浪微博</a>
-                <a href="javascript:;">官方微信</a>
-                <a href="javascript:;">联系我们</a>
-                <a href="javascript:;">公益基金会</a>
-                <a href="javascript:;">廉洁举报</a>
-            </div>
-            <div class="footer-links-item">
-                <p class="item-title">特色服务</p>
-                <a href="javascript:;">了解小米</a>
-                <a href="javascript:;">加入小米</a>
-                <a href="javascript:;">投资者关系</a>
-                <a href="javascript:;">企业社会责任</a>
-            </div>
-            <div class="footer-links-item">
-                <p class="item-title">特色服务</p>
-                <a href="javascript:;">F码通道</a>
-                <a href="javascript:;">礼物码</a>
-                <a href="javascript:;">防伪查询</a>
-            </div>
-            <div class="footer-links-item">
-                <div>
-                <p style="color: #ff6700; font-size: 20px;">400-100-5678</p>
-                <p style="color: #757575;">8:00-18:00（仅收市话费）</p>
+            <!-- 顶部导航栏-->
+            <!-- #region -->
+            <el-header height="40px" id="topbar">
+                <div class="topbar-nav">
+                    <el-button type="text">小米商城</el-button>
+                    <span>|</span>
+                    <el-button type="text">MIUI</el-button>
+                    <span>|</span>
+                    <el-button type="text">IoT</el-button>
+                    <span>|</span>
+                    <el-button type="text">云服务</el-button>
+                    <span>|</span>
+                    <el-button type="text">天星数科</el-button>
+                    <span>|</span>
+                    <el-button type="text">有品</el-button>
+                    <span>|</span>
+                    <el-button type="text">小爱开放平台</el-button>
+                    <span>|</span>
+                    <el-button type="text">企业团购</el-button>
+                    <span>|</span>
+                    <el-button type="text">资质证照</el-button>
+                    <span>|</span>
+                    <el-button type="text">协议规则</el-button>
+                    <span>|</span>
+                    <el-button type="text">下载app</el-button>
+                    <span>|</span>
+                    <el-button type="text">智能生活</el-button>
+                    <span>|</span>
+                    <el-button type="text">Select Location</el-button>
                 </div>
-            </div>
-            </div>
-        </el-footer>
-        <!-- 底栏容器End -->
+                <div :class="num == 0 ? 'topbar-mini-car-menu' : 'topbar-mini-car-menu-full'">
+                    <i class="el-icon-shopping-cart-full">  购物车 ({{ num }}) </i>
+                </div>
+
+                <!-- 未登录 -->
+                <div v-if="!user_name" class="topbar-user-not-login">
+                    <el-button type="text" @click="login">登录</el-button>
+                    <span>|</span>
+                    <el-button type="text" @click="register">注册</el-button>
+                    <span>|</span>
+                    <el-button type="text">消息通知</el-button>
+                </div>
+
+                <!-- 登录 -->
+                <div v-else class="topbar-user-login">
+                    <el-dropdown @command="aboutUserCommand">
+                        <span class="el-dropdown-link">
+                        {{user_name}}<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="myFavour">我的喜欢</el-dropdown-item>
+                            <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                    <span>|</span>
+                    <el-button type="text">消息通知</el-button>
+                    <span>|</span>
+                    <el-button type="text">我的订单</el-button>
+                </div>
+            </el-header>
+            <!-- #endregion -->
+
+            <!-- 顶部容器 -->
+            <!-- #region -->
+            <el-header height="100px" id="header">
+                <div class="head-logo">
+                    <!-- <img src="./assets/mi-logo.png" /> -->
+                    <router-link to="/">
+                        <img src="./assets/mi-logo.png" />
+                    </router-link>
+                </div>
+                <el-menu default-active="activeIndex" 
+                    mode="horizontal"
+                    text-color="#333" 
+                    active-text-color="#ff6700" >
+                    <el-menu-item index="1">全部商品分类</el-menu-item>
+                    <el-menu-item index="2">手机</el-menu-item>
+                    <el-menu-item index="3">电视机</el-menu-item>
+                    <el-menu-item index="4">空调</el-menu-item>
+                    <el-menu-item index="5">洗衣机</el-menu-item>
+                </el-menu>
+                <!-- <div class="head-nav">
+                    <el-button type="text">全部商品分类</el-button>
+                    <el-button type="text">手机</el-button>
+                    <el-button type="text">电视机</el-button>
+                    <el-button type="text">空调</el-button>
+                    <el-button type="text">洗衣机</el-button>
+                </div> -->
+                <div class="head-search">
+                    <el-input v-model="search" placeholder="请输入搜索内容">
+                        <el-button slot="append" icon="el-icon-search"></el-button>
+                    </el-input>
+                </div>
+            </el-header>
+            <!-- #endregion -->
+            
+            <!-- 登录组件 -->
+            <Login></Login>
+            
+            <!-- 注册组件 -->
+            <!-- 监听自定义事件fromRegister -->
+            <Register :show="isShow" @fromRegister="getRegisterValue"></Register>
+            <!-- 主要区域容器 -->
+            <el-main>
+                <router-view></router-view>
+            </el-main>
+            
+            <!-- 底栏容器 -->
+            <!-- #region -->
+            <el-footer id="footer">
+                <div class="footer-service">
+                    <el-button type="text" class="icon-tool">预约维修服务</el-button>
+                    <span>|</span>
+                    <el-button type="text" class="icon-seven-days">7天无理由退货</el-button>
+                    <span>|</span>
+                    <el-button type="text" class="icon-fifteen-days">15天免费换货</el-button>
+                    <span>|</span>
+                    <el-button type="text" class="icon-present">满99元包邮</el-button>
+                    <span>|</span>
+                    <el-button type="text" class="icon-position">520余家售后网点</el-button>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-item">
+                        <p class="item-title">帮助中心</p>
+                        <a href="javascript:;">账户管理</a>
+                        <a href="javascript:;">购物指南</a>
+                        <a href="javascript:;">订单操作</a>
+                    </div>
+                    <div class="footer-links-item">
+                        <p class="item-title">服务支持</p>
+                        <a href="javascript:;">售后政策</a>
+                        <a href="javascript:;">自助服务</a>
+                        <a href="javascript:;">相关下载</a>
+                    </div>
+                    <div class="footer-links-item">
+                        <p class="item-title">线下门店</p>
+                        <a href="javascript:;">小米之家</a>
+                        <a href="javascript:;">服务网点</a>
+                        <a href="javascript:;">授权体验店</a>
+                    </div>
+                    <div class="footer-links-item">
+                        <p class="item-title">关于小米</p>
+                        <a href="javascript:;">了解小米</a>
+                        <a href="javascript:;">加入小米</a>
+                        <a href="javascript:;">投资者关系</a>
+                        <a href="javascript:;">企业社会责任</a>
+                        <a href="javascript:;">廉洁举报</a>
+                    </div>
+                    <div class="footer-links-item">
+                        <p class="item-title">关注我们</p>
+                        <a href="javascript:;">新浪微博</a>
+                        <a href="javascript:;">官方微信</a>
+                        <a href="javascript:;">联系我们</a>
+                        <a href="javascript:;">公益基金会</a>
+                        <a href="javascript:;">廉洁举报</a>
+                    </div>
+                    <div class="footer-links-item">
+                        <p class="item-title">关注我们</p>
+                        <a href="javascript:;">了解小米</a>
+                        <a href="javascript:;">加入小米</a>
+                        <a href="javascript:;">投资者关系</a>
+                        <a href="javascript:;">企业社会责任</a>
+                    </div>
+                    <div class="footer-links-item">
+                        <p class="item-title">特色服务</p>
+                        <a href="javascript:;">F码通道</a>
+                        <a href="javascript:;">礼物码</a>
+                        <a href="javascript:;">防伪查询</a>
+                    </div>
+                    <div class="footer-links-item">
+                        <div>
+                            <p style="color: #ff6700; font-size: 20px;">400-100-5678</p>
+                            <p style="color: #757575;">8:00-18:00（仅收市话费）</p>
+                        </div>
+                    </div>
+                </div>
+            </el-footer>
+            <!-- #endregion -->
         </el-container>
         <!-- <div id="nav">
         <router-link to="/">Home</router-link> |
@@ -196,7 +211,8 @@ export default {
         return {
             num: 0,
             search: "",
-            isShow: false
+            isShow: false,
+            activeIndex: "1"
         };
     },
 
@@ -246,8 +262,9 @@ export default {
     * {
         margin: 0;
     }
-
+    
     /* 顶部导航栏 */
+    /* #region */
     #topbar {
         background-color: #3d3d3d;
     }
@@ -317,7 +334,7 @@ export default {
         display: flex;
         justify-content: center; /*内容水平居中*/
         align-items: center; /*内容垂直居中*/
-        margin-right: 50px;
+        margin-right: 50px; 
     }
 
     /* #topbar .topbar-user-login div {
@@ -334,9 +351,10 @@ export default {
         background-color: #e0e0e0 !important; /*!important用于提高优先级*/
         color: #ff6700 !important;
     }
-    /* 顶部导航栏 */
+    /* #endregion */
 
     /* 顶部容器 */
+    /* #region */
     #header {
         width: 1260px;
         margin: 0 auto;
@@ -347,33 +365,41 @@ export default {
     #header .head-logo {
         height: 50px;
         width: 50px;
-        
-        /* display: flex;
-        justify-content: center;
-        align-items: center; */
+        position: relative;
         background-color: #ff6700;
     }
 
-    #header .head-logo router-link {
-
-    }
     #header .head-logo img {
         height: 80%;
         width: 80%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        
     }
-    #header .head-nav {
+    /* #header .head-nav {
         margin-left: 150px;
     }
     #header .el-button--text {
         color: #333;
         font-size: 16px;
+    } */
+    .el-menu {
+        margin-left: 150px;
+    }
+    .el-menu.el-menu--horizontal {
+        border: none;
+        
     }
     #header .head-search {
-        margin-left: 300px;
+        margin-left: 150px;
         width: 400px;
     }
-    /* 顶部容器 */
+    /* #endregion */
+    
     /* 底部容器 */
+    /* #region */
     #footer .footer-service {
         width: 1260px;
         display: flex;
@@ -412,5 +438,5 @@ export default {
         top: 50%;
         transform: translateY(-50%);
     }
-    /* 底部容器 */
+    /* #endregion */
 </style>
