@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-11 17:32:29
+ * @LastEditTime: 2021-06-15 13:44:38
 -->
 <template>
     <div id="app">
@@ -75,28 +75,21 @@
             <!-- #region -->
             <el-header height="100px" id="header">
                 <div class="head-logo">
-                    <!-- <img src="./assets/mi-logo.png" /> -->
                     <router-link to="/">
                         <img src="./assets/mi-logo.png" />
                     </router-link>
                 </div>
-                <el-menu default-active="activeIndex" 
+                <el-menu default-active="/" 
                     mode="horizontal"
                     text-color="#333" 
-                    active-text-color="#ff6700" >
-                    <el-menu-item index="1">全部商品分类</el-menu-item>
-                    <el-menu-item index="2">手机</el-menu-item>
-                    <el-menu-item index="3">电视机</el-menu-item>
-                    <el-menu-item index="4">空调</el-menu-item>
-                    <el-menu-item index="5">洗衣机</el-menu-item>
+                    active-text-color="#ff6700" 
+                    router>
+                    <el-menu-item index="/">全部商品分类</el-menu-item>
+                    <el-menu-item index="/phone">手机</el-menu-item>
+                    <el-menu-item index="/television">电视机</el-menu-item>
+                    <el-menu-item index="/ac">空调</el-menu-item>
+                    <el-menu-item index="/washer">洗衣机</el-menu-item>
                 </el-menu>
-                <!-- <div class="head-nav">
-                    <el-button type="text">全部商品分类</el-button>
-                    <el-button type="text">手机</el-button>
-                    <el-button type="text">电视机</el-button>
-                    <el-button type="text">空调</el-button>
-                    <el-button type="text">洗衣机</el-button>
-                </div> -->
                 <div class="head-search">
                     <el-input v-model="search" placeholder="请输入搜索内容">
                         <el-button slot="append" icon="el-icon-search"></el-button>
@@ -188,11 +181,6 @@
             </el-footer>
             <!-- #endregion -->
         </el-container>
-        <!-- <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
-        </div>
-        <router-view />-->
     </div>
 </template>
 
@@ -211,8 +199,7 @@ export default {
         return {
             num: 0,
             search: "",
-            isShow: false,
-            activeIndex: "1"
+            isShow: false
         };
     },
 
@@ -378,13 +365,7 @@ export default {
         transform: translate(-50%, -50%);
         
     }
-    /* #header .head-nav {
-        margin-left: 150px;
-    }
-    #header .el-button--text {
-        color: #333;
-        font-size: 16px;
-    } */
+    
     .el-menu {
         margin-left: 150px;
     }
