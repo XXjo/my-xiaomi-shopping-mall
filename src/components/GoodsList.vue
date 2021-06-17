@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-06-15 16:55:31
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-16 16:22:01
+ * @LastEditTime: 2021-06-17 10:29:19
 -->
 <template>
     <div>
@@ -38,6 +38,7 @@
         width: 234px;
         height: 280px;
         padding: 10px 0;
+        margin: 0 0 14.5px 13.7px;
         background-color: white;
         transition: all 0.2s linear;
     }

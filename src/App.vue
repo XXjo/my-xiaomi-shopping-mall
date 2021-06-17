@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-15 13:44:38
+ * @LastEditTime: 2021-06-17 14:48:37
 -->
 <template>
     <div id="app">
@@ -245,9 +245,22 @@ export default {
 };
 </script>
 
+<style>
+    body {
+        margin: 0;
+    }
+</style>
+
 <style scoped>
     * {
         margin: 0;
+    }
+    .el-main {
+        padding: 0;
+    }
+
+    .el-footer {
+        padding: 0;
     }
     
     /* 顶部导航栏 */
@@ -379,6 +392,7 @@ export default {
     }
     /* #endregion */
     
+
     /* 底部容器 */
     /* #region */
     #footer .footer-service {
