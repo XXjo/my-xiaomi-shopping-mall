@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-17 17:26:19
+ * @LastEditTime: 2021-06-18 16:49:31
 -->
 <template>
     <div class="home">
@@ -128,7 +128,7 @@
    /* 解决浮动子元素造成父元素高度坍塌的问题 */
     /* #region */
     .main-bg::after, .phone::after, .fitting::after, .electricAppliance::after{
-        content: "\0020";
+        content: " ";
         display: block;
         height: 0;
         clear: both;

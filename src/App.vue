@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-17 14:48:37
+ * @LastEditTime: 2021-06-18 14:53:52
 -->
 <template>
     <div id="app">
@@ -79,7 +79,7 @@
                         <img src="./assets/mi-logo.png" />
                     </router-link>
                 </div>
-                <el-menu default-active="/" 
+                <el-menu :default-active="activeIndex" 
                     mode="horizontal"
                     text-color="#333" 
                     active-text-color="#ff6700" 
@@ -199,13 +199,16 @@ export default {
         return {
             num: 0,
             search: "",
-            isShow: false
+            isShow: false,
+            activeIndex: "/"
         };
     },
 
-    created() {
-        
+    updated() {
+        this.activeIndex = this.$route.fullPath;
     },
+
+
 
     computed: {
         ...mapGetters({
