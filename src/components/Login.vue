@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-28 13:14:37
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-09 17:14:57
+ * @LastEditTime: 2021-06-21 17:45:32
 -->
 <template>
     <div>
@@ -105,6 +105,8 @@ export default {
                             if(res.data.code === "001") {
                                 this.setShowLoginFlag(false);
                                 this.setUserName(this.user_info.name);
+                                // 使用sessionStorge或者是localStorge，是为了防止因为刷新导致vuex恢复初始值，从而造成误以为未登录的情况
+                                localStorage.setItem("username", this.user_info.name);
                                 this.notifySuccess(res.data.msg);
                             }
                             else {
