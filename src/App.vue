@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-18 14:53:52
+ * @LastEditTime: 2021-06-23 16:15:51
 -->
 <template>
     <div id="app">
@@ -44,7 +44,7 @@
                 </div>
 
                 <!-- 未登录 -->
-                <div v-if="!user_name" class="topbar-user-not-login">
+                <div v-if="!user" class="topbar-user-not-login">
                     <el-button type="text" @click="login">登录</el-button>
                     <span>|</span>
                     <el-button type="text" @click="register">注册</el-button>
@@ -56,7 +56,7 @@
                 <div v-else class="topbar-user-login">
                     <el-dropdown @command="aboutUserCommand">
                         <span class="el-dropdown-link">
-                        {{user_name}}<i class="el-icon-arrow-down el-icon--right"></i>
+                        {{user.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="myFavour">我的喜欢</el-dropdown-item>
@@ -204,20 +204,25 @@ export default {
         };
     },
 
+    created() {
+        //使用localStorage，防止刷新使得vuex的状态恢复成初始值
+        if(localStorage.getItem("user")) {
+            this.setUser(JSON.parse(localStorage.getItem("user")));
+        }
+    },
+
     updated() {
         this.activeIndex = this.$route.fullPath;
     },
 
-
-
     computed: {
         ...mapGetters({
-            user_name: "getUserName"
+            user: "getUser"
         })
     },
 
     methods: {
-        ...mapActions(["setUserName", "setShowLoginFlag"]),
+        ...mapActions(["setUser", "setShowLoginFlag"]),
 
         login() {
             this.setShowLoginFlag(true);
@@ -229,7 +234,11 @@ export default {
             }
 
             if(command === "loginOut") {
-                this.setUserName("");
+                // 设置vuex中user的状态
+                this.setUser("");
+                // 删除localStorage中username的键值对
+                localStorage.removeItem("user");
+                this.notifySuccess("退出登录成功");
             }
         },
 

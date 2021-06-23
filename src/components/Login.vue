@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-28 13:14:37
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-21 17:45:32
+ * @LastEditTime: 2021-06-23 16:14:14
 -->
 <template>
     <div>
@@ -92,7 +92,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["setUserName", "setShowLoginFlag"]),
+        ...mapActions(["setUser", "setShowLoginFlag"]),
         login() {
             this.$refs.login_form.validate((valid) => {
                 if(valid) {
@@ -104,9 +104,10 @@ export default {
                         .then(res => {
                             if(res.data.code === "001") {
                                 this.setShowLoginFlag(false);
-                                this.setUserName(this.user_info.name);
+                                this.setUser(res.data.user);
                                 // 使用sessionStorge或者是localStorge，是为了防止因为刷新导致vuex恢复初始值，从而造成误以为未登录的情况
-                                localStorage.setItem("username", this.user_info.name);
+                                // localStorage存入的value值是字符串
+                                localStorage.setItem("user", JSON.stringify(res.data.user));
                                 this.notifySuccess(res.data.msg);
                             }
                             else {

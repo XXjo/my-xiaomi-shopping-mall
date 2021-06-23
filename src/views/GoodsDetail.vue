@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-06-15 17:37:12
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-21 17:58:50
+ * @LastEditTime: 2021-06-23 17:56:04
 -->
 <template>
     <div>
@@ -69,6 +69,7 @@
     </div>
 </template>
 <script>
+    import {mapGetters, mapActions} from 'vuex';
     export default {
         data() {
             return {
@@ -78,12 +79,21 @@
                 favourite: false
             }
         },
+
         created() {
             this.productId = this.$route.query.id;
             this.getDatail(this.productId);
             this.getImage(this.productId);
         },
+
+        
+        computed: {
+            ...mapGetters({
+                user: "getUser"
+            })
+        },
         methods: {
+            ...mapActions(["setUser", "setShowLoginFlag", "addShoppingCar"]),
             getDatail(val) {
                 this.$axios
                     .post("/api/product/getDetails", {productID: val})
@@ -101,7 +111,6 @@
                 this.$axios
                     .post("/api/product/getDetailsPicture", {productID: val})
                     .then(res => {
-                        console.log(res.data);
                         if(res.data.code === "001") {
                             this.productImage = res.data.ProductPicture;
                         }
@@ -113,7 +122,31 @@
             },
 
             addShopCart() {
-                
+                if(this.user) {
+                    this.$axios
+                        .post("/api/user/shoppingCart/addShoppingCart", {
+                            user_id: this.user.user_id,
+                            product_id: this.productId
+                        })
+                        .then(res => {
+                            let code = res.data.code;
+                            if(code === "001") {
+                                this.addShopCart(res.data.addShoppingCar);
+                            }
+                            else if(code === "002") {
+                                this.addShoppingCar(this.productId);
+                            }
+                            else {
+
+                            }
+                        })
+                        .catch(error => {
+                            
+                        })
+                }
+                else{
+                    this.setShowLoginFlag(true);
+                }
             },
 
             addFavourite() {
