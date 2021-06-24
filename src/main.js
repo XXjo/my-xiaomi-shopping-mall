@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-09 14:11:45
+ * @LastEditTime: 2021-06-24 16:42:30
  */
 import Vue from "vue";
 import App from "./App.vue";
@@ -24,7 +24,7 @@ Vue.prototype.$axios = axios;
 import util from "./util";
 Vue.use(util);
 
-new Vue({
+let vue = new Vue({
   router,
   store,
   //render函数是vue通过js渲染dom结构的函数createElement，约定可以简写为h

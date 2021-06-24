@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-06-15 17:37:12
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-23 17:56:04
+ * @LastEditTime: 2021-06-24 16:42:56
 -->
 <template>
     <div>
@@ -131,13 +131,15 @@
                         .then(res => {
                             let code = res.data.code;
                             if(code === "001") {
-                                this.addShopCart(res.data.addShoppingCar);
+                                this.addShoppingCar(res.data.addShoppingCar);
+                                this.notifySuccess(res.data.msg);
                             }
                             else if(code === "002") {
                                 this.addShoppingCar(this.productId);
+                                this.notifySuccess(res.data.msg);
                             }
                             else {
-
+                                this.notifyError(res.data.msg);
                             }
                         })
                         .catch(error => {
@@ -150,7 +152,7 @@
             },
 
             addFavourite() {
-
+                this.favourite = !this.favourite;
             }
         }
     }

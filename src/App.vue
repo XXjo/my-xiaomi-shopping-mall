@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-01-20 09:43:21
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-23 16:15:51
+ * @LastEditTime: 2021-06-24 17:38:51
 -->
 <template>
     <div id="app">
@@ -197,7 +197,6 @@ export default {
 
     data() {
         return {
-            num: 0,
             search: "",
             isShow: false,
             activeIndex: "/"
@@ -217,12 +216,38 @@ export default {
 
     computed: {
         ...mapGetters({
-            user: "getUser"
-        })
+            user: "getUser",
+            num: "getShoppingCarNum"
+        })  
+    },
+
+    watch: {
+        user(newValue) {
+            if(newValue === "") {
+                this.setShoppingCar([]);
+            }
+            else {
+                this.$axios
+                    .post("/api/user/shoppingCart/getShoppingCart", {
+                        user_id: newValue.user_id
+                    })
+                    .then(res => {
+                        if(res.data.code === "001") {
+                            this.setShoppingCar(res.data.shoppingCartData);
+                        }
+                        else{
+                            this.notifyError(res.data.msg);
+                        }
+                    })
+                    .catch(error => {
+                        
+                    })
+            }
+        }
     },
 
     methods: {
-        ...mapActions(["setUser", "setShowLoginFlag"]),
+        ...mapActions(["setUser", "setShowLoginFlag", "setShoppingCar"]),
 
         login() {
             this.setShowLoginFlag(true);

@@ -4,7 +4,7 @@
  * @Autor: XuXiaoling
  * @Date: 2021-06-23 16:33:40
  * @LastEditors: XuXiaoling
- * @LastEditTime: 2021-06-23 17:55:46
+ * @LastEditTime: 2021-06-24 16:44:38
  */
 export default {
     state: {
@@ -21,6 +21,7 @@ export default {
             state.shoppingCar.forEach(ele => {
                 num += ele.num;
             });
+            return num;
         }
     },
 
@@ -49,7 +50,7 @@ export default {
         },
 
         addShoppingCar( { commit }, value) {
-            commit("addShoppingCartNum", value);
+            commit("ADDSHOPPINGCAR", value);
         }
     }
 }
